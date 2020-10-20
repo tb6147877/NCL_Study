@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 
-//This function can copy elements in the b to a.  a and b are char arries. It is a deep copy.
+//This function can copy elements in the b to a.  a and b are dynamic char arraies. It is a deep copy.
 //Actually the size of a must equal or greater than b.
 void v1(char* a, const char* b) {
 
@@ -18,7 +18,7 @@ void v1(char* a, const char* b) {
 
 }
 
-//In this new function, I use comma operator and postfix increment.
+//In this new function, I use comma operator and postfix increment operator.
 void new_v1(char* a, const char* b) {
 
 	while (*a = '\0',*b != '\0')
