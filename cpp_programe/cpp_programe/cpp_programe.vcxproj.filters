@@ -27,5 +27,11 @@
     <ClCompile Include="assignment_passing_parameters.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="assignment_uncon_con.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="assignment_variable_property.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

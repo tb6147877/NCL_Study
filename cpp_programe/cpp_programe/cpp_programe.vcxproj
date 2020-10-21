@@ -155,6 +155,8 @@
     <ClCompile Include="assignment_namespace.cpp" />
     <ClCompile Include="assignment_passing_parameters.cpp" />
     <ClCompile Include="assignment_pointer.cpp" />
+    <ClCompile Include="assignment_uncon_con.cpp" />
+    <ClCompile Include="assignment_variable_property.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
