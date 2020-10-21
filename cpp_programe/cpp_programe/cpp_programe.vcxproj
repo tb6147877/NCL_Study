@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="assignemnt_funcs_vars.cpp" />
     <ClCompile Include="assignment_namespace.cpp" />
+    <ClCompile Include="assignment_pointer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,5 +21,8 @@
     <ClCompile Include="assignment_namespace.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="assignment_pointer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
