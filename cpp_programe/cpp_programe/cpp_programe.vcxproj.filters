@@ -36,5 +36,8 @@
     <ClCompile Include="assignment_meaningful_func.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="assignment_interaction_recursion.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
