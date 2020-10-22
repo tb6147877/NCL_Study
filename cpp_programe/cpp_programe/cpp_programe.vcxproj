@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="assignemnt_funcs_vars.cpp" />
+    <ClCompile Include="assignment_meaningful_func.cpp" />
     <ClCompile Include="assignment_namespace.cpp" />
     <ClCompile Include="assignment_passing_parameters.cpp" />
     <ClCompile Include="assignment_pointer.cpp" />
