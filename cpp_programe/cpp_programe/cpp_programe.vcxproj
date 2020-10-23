@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Algorithmic_2_2_.cpp" />
     <ClCompile Include="assignemnt_funcs_vars.cpp" />
     <ClCompile Include="assignment_interaction_recursion.cpp" />
     <ClCompile Include="assignment_meaningful_func.cpp" />

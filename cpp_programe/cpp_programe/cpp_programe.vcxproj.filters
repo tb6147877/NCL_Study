@@ -39,5 +39,8 @@
     <ClCompile Include="assignment_interaction_recursion.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Algorithmic_2_2_.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
