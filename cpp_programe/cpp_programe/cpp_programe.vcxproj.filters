@@ -42,5 +42,8 @@
     <ClCompile Include="Algorithmic_2_2_.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="assignment_sort.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
