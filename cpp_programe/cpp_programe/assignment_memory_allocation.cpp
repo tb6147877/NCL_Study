@@ -24,8 +24,27 @@ void func2() {
 	//I am not very sure.
 }
 
+//3.
+//(1)use delete[] to reclaim an array on the heap in one go.
+//(2)all the integer values are stored on the stack while their references (poitners pointing to them) are on the heap
+void func3() {
+	int arr[5]{ 0,1,2,3,4 };
+	int **ptr{ new int*{&arr[0]} };
+	for (int i = 0; i < 5; i++)
+	{
+		std::cout << *(*ptr + i)<<"\n";
+	}
+	delete ptr;
+	ptr = nullptr;
+	std::cout << "===========================\n";
+	for (int i = 0; i < 5; i++)
+	{
+		std::cout << arr[i] << "\n";
+	}
+}
+
 
 int main() {
-	func2();
-
+	//func2();
+	func3();
 }
