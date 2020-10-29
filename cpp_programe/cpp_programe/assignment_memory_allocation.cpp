@@ -9,20 +9,9 @@
 //}
 
 //2.
-//(1)mainly heap, but it is also happened in stack.
+//(1)I think it cannot happened in stack.
 //(2)using pointer carefully or maybe sometimes use smart pointer is better.
-//(3)
-void func2() {
-	int* ptr1;
-	{
-		int a = 5;
-		ptr1 = &a;
-	}
-	std::cout << *ptr1;
-	int b = 6;
-	ptr1 = &b;
-	//I am not very sure.
-}
+//(3)I cannot.
 
 //3.
 //(1)use delete[] to reclaim an array on the heap in one go.

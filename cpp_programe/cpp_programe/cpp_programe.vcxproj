@@ -162,6 +162,7 @@
     <ClCompile Include="assignment_sort.cpp" />
     <ClCompile Include="assignment_uncon_con.cpp" />
     <ClCompile Include="assignment_variable_property.cpp" />
+    <ClCompile Include="BinarySearchTree.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
