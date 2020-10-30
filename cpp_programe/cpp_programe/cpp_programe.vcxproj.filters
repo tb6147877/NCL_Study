@@ -51,5 +51,8 @@
     <ClCompile Include="BinarySearchTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="assignment_arrays.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
