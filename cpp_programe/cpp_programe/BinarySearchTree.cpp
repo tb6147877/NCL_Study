@@ -31,10 +31,28 @@ private:
 		}
 	}
 
+	Node* minimun(Node* node) {
+		if (node==nullptr)
+		{
+			return node;
+		}
+		while (node->left!=nullptr)
+		{
+			node = node->left;
+		}
+		return node;
+	}
+
+
+
 public:
 	BST() :m_root{ nullptr } {};
 	~BST() { 
 		//terminate_tree(); 
+	}
+
+	Node* getRoot() {
+		return m_root;
 	}
 
 	void insert(const int value) {
@@ -65,7 +83,62 @@ public:
 		((y->value < value) ? y->right : y->left) = ptr;
 	}
 
-	void remove(Node* node) {}
+	void remove(Node* node) {
+		if (node==nullptr)
+		{
+			return;
+		}
+		if (node->left==nullptr)
+		{
+			transplant(node, node->right);
+		}
+		else if (node->right==nullptr)
+		{
+			transplant(node, node->left);
+		}
+		else
+		{
+			Node* t = minimun(node->right);
+			if (t->parent!=node)
+			{
+				transplant(t, t->right);
+				t->right = node->right;
+				t->right->parent = t;
+			}
+			transplant(node, t);
+			t->left = node->left;
+			t->left->parent = t;
+		}
+		delete node;
+	}
+
+	void transplant(Node* ptr_old, Node* ptr_new) {
+		if (ptr_old->parent == nullptr)
+		{
+			m_root = ptr_new;
+			m_root->parent = nullptr;
+			return;
+		}
+		((ptr_old == ptr_old->parent->left) ? ptr_old->parent->left : ptr_old->parent->right) = ptr_new;
+		if (ptr_new != nullptr)
+		{
+			ptr_new->parent = ptr_old->parent;
+		}
+	}
+
+	Node* search(Node* node, const int value) {
+		if (node==nullptr||value==node->value)
+		{
+			return node;
+		}
+		if (value<node->value)
+		{
+			return search(node->left, value);
+		}
+		else {
+			return search(node->right, value);
+		}
+	}
 
 	void print_tree() {
 		std::function<void(Node* node,BST* tree)> printFunc{ [](Node* node,BST* tree) {
@@ -101,11 +174,13 @@ public:
 				{
 					cur.second = node->value;
 					cur.first = 0;				
-				}
-				*/
+				}*/
+				
 
 				//¢Ú
-				(cur.second != node->value) ? (cur.second = node->value,cur.first = 0) :(0) ;
+				(cur.second != node->value) ? (cur.second = node->value, cur.first = 0) : (0) ;
+
+
 				++cur.first;
 
 				if (max.first<cur.first)
@@ -155,6 +230,7 @@ public:
 
 int main() {
 	BST tree{};
+	tree.insert(88);
 	tree.insert(-10);
 	tree.insert(0);
 	tree.insert(8);
@@ -169,11 +245,18 @@ int main() {
 	tree.insert(2);
 	tree.print_tree();
 	std::cout << "-------------------------------------------------------\n";
-	std::cout << tree.get_sum_of_tree()<<'\n';
+	Node* temp =tree.search(tree.getRoot(),7) ;
+
+	tree.remove(temp);
+	std::cout << "-------------------------------------------------------\n";
+	tree.print_tree();
+
+	std::cout << "-------------------------------------------------------\n";
+	/*std::cout << tree.get_sum_of_tree()<<'\n';
 	std::cout << "-------------------------------------------------------\n";
 	std::cout << tree.get_largest_value() << '\n';
 	std::cout << "-------------------------------------------------------\n";
-	std::cout << tree.get_most_common_value() << '\n';
+	std::cout << tree.get_most_common_value() << '\n';*/
 	/*std::cout << "-------------------------------------------------------\n";
 	tree.terminate_tree();
 	std::cout << "-------------------------------------------------------\n";
