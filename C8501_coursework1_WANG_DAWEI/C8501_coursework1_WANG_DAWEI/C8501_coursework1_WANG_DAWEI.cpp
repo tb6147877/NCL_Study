@@ -2,9 +2,12 @@
 //
 
 #include <iostream>
+#include <map>
+#include <utility>
 
 #include "Map.h"
 #include "Tools.h"
+#include "Astar_Manager.h"
 
 int main()
 {
@@ -12,8 +15,22 @@ int main()
 	/*maze1::Unit unit{ 4,5,maze1::Unit::UnitType::CENTER };
     std::cout << "Hello World!\n";*/
 
-	maze1::Map map{ 10,10,3 };
+	/*std::map<int, char> map{};
+	map.insert(std::pair<int, char>{6, 'a'});
+	map.insert(std::pair<int, char>{4, 'b'});
+	map.insert(std::pair<int, char>{0, 'c'});
+	map.insert(std::pair<int, char>{-1, 'z'});
+	std::map<int, char>::iterator it = map.begin();
+	for (it = map.begin(); it != map.end(); ++it)
+		std::cout << it->first << " => " << it->second << '\n';
+	std::cout << (map.begin())->second;*/
+
+	maze1::Map map{ 20,80,6 };
+	/*maze1::Astar_Manager mgr{ &map };
+	maze1::Unit* target{ map.getEdges()[0] };
+	mgr.findPath(map.getCenter(), target->getCoordinate());*/
 	map.draw();
+	
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单

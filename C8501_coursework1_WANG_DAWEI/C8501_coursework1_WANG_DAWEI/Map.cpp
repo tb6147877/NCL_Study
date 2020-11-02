@@ -18,7 +18,10 @@ maze1::Unit::MapType maze1::Map::judgeMapType(const int x, const int y) {
 }
 
 maze1::Unit::UnitType maze1::Map::randomUnitType() {
-	return (Unit::UnitType)Tools::getRamdom(Unit::UnitType::SPACE, Unit::UnitType::WALL);
+	int temp{ Tools::getRamdom(1,m_exitNum)};
+	Unit::UnitType type = temp == 1 ? Unit::UnitType::WALL : Unit::UnitType::SPACE;
+	return type;
+	
 }
 
 maze1::Unit* maze1::Map::generateUnit(const int x, const int y) {
@@ -48,17 +51,22 @@ maze1::Unit* maze1::Map::generateUnit(const int x, const int y, const Unit::Unit
 }
 
 void maze1::Map::initMap() {
-	m_centerX = m_row / 2;
-	m_centerY = m_column / 2;
-
-	for (int i = 0; i < m_row; i++)
+	//TODO IF DON'T HAVE PATH, RECREATE UNITS
+	if (m_generateTimes==0)
 	{
-		for (int j = 0; j < m_column; j++)
+		for (int i = 0; i < m_row; i++)
 		{
-			m_units[i][j] = generateUnit(i,j);
+			for (int j = 0; j < m_column; j++)
+			{
+				m_units[i][j] = generateUnit(i, j);
+			}
 		}
+		setExit();
 	}
-	setExit();
+	else {
+		reduceWall();
+	}
+	
 }
 
 void maze1::Map::walkMap(const std::function<void(Unit* unit, Map* map)>& func) {
@@ -75,7 +83,7 @@ void maze1::Map::setExit() {
 	int curNum{ 0 };
 	std::vector<Unit*> edges{};
 	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
-				if (unit->getMapType()==Unit::MapType::EDGE)
+				if (unit->getMapType()==Unit::MapType::EDGE and (not isBlindUnit(unit)))
 				{
 					edges.push_back(unit);
 				}
@@ -105,7 +113,35 @@ void maze1::Map::setExit() {
 	for (auto  item: exits)
 	{
 		edges[item]->setUnitType(Unit::UnitType::EXIT);
+		m_exits.push_back(edges[item]);
 	}
+}
+
+void maze1::Map::reduceWall() {
+	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
+				if (unit->getMapType() == Unit::MapType::NORMAL and unit->getUnitType()==Unit::UnitType::WALL)
+				{
+					unit->setUnitType((Unit::UnitType)Tools::getRamdom(Unit::UnitType::SPACE, Unit::UnitType::WALL));
+				}
+	} };
+	walkMap(func);
+}
+
+bool maze1::Map::isBlindUnit(Unit* unit) {
+	//These units cannot access
+	//Left-Top
+	if (unit->getCoordinate().first == 0 and unit->getCoordinate().second == 0)
+		return true;
+	//Right-Top
+	if (unit->getCoordinate().first == 0 and unit->getCoordinate().second == m_column-1)
+		return true;
+	//Left-Bottom
+	if (unit->getCoordinate().first == m_row-1 and unit->getCoordinate().second == 0)
+		return true;
+	//Right-Bottom
+	if (unit->getCoordinate().first == m_row - 1 and unit->getCoordinate().second == m_column - 1)
+		return true;
+	return false;
 }
 
 //=================================================================
@@ -113,14 +149,50 @@ void maze1::Map::setExit() {
 maze1::Map::Map(const int row, const int column, const int exitNum)
 	:m_row{ row }, m_column{ column }, m_exitNum{ exitNum }, m_units{ (unsigned int)row,std::vector<Unit*>{(unsigned int)column} }
 {
+	m_centerX = m_row / 2;
+	m_centerY = m_column / 2;
+	m_generateTimes = 0;
+	std::vector<Unit*> arr{};
 	do
 	{
 		initMap();
-	} while (not checkHasPath());
+		++m_generateTimes;
+	} while (not checkHasPath(arr));
+	std::cout << "The map generates " << m_generateTimes << " times.\n\n";
 }
-maze1::Map::~Map() {}
 
-bool maze1::Map::checkHasPath() { return true; }
+
+maze1::Map::~Map() {
+	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
+				delete unit;
+	} };
+	walkMap(func);
+}
+
+bool maze1::Map::checkHasPath(std::vector<Unit*>& arr) {
+	bool flag{ true };
+	for (int i = 0; i < getExits().size(); i++)
+	{
+		maze1::Astar_Manager mgr{ m_units,getMapScale() };
+		maze1::Unit* target{ getExits()[i] };
+		if (std::find(arr.begin(), arr.end(), target) != arr.end())
+			continue;
+		std::cout << "Searching:" << target->getCoordinate().first << "  " << target->getCoordinate().second << "\n";
+		flag = mgr.findPath(getCenter(), target->getCoordinate());
+		if (not flag)
+		{
+			std::cout << "Searching Failed!\n";
+			break;
+		}
+		else {
+			arr.push_back(target);
+		}
+	}
+	std::cout << "--------------------------------------\n";
+
+	
+	return flag;
+}
 
 void maze1::Map::draw() {
 	for (int i = 0; i < m_row; i++)

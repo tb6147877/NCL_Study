@@ -30,6 +30,12 @@
     <ClCompile Include="MazeConfig.h">
       <Filter>头文件</Filter>
     </ClCompile>
+    <ClCompile Include="Astar_Grid.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Astar_Manager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Unit.h">
@@ -39,6 +45,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Tools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Astar_Grid.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Astar_Manager.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
