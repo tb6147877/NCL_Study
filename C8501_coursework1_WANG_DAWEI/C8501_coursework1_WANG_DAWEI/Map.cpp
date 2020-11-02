@@ -163,6 +163,10 @@ maze1::Map::Map(const int row, const int column, const int exitNum)
 
 
 maze1::Map::~Map() {
+	if (m_units.size()==0)
+	{
+		return;
+	}
 	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
 				delete unit;
 	} };

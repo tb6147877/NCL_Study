@@ -18,6 +18,8 @@ namespace maze1 {
 		static int getRamdom(int min,int max);
 		static std::vector<std::string> readFile(const std::string& path, int& row, int& column);
 		static void writeFile(const std::string& content, const std::string& path);
+		static bool hasFile(const std::string& path);
+		static int getNumber(const std::string& discribe);
 	};
 
 }

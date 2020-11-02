@@ -39,6 +39,7 @@ namespace maze1 {
 		bool isBlindUnit(Unit* unit);
 	public:
 		Map(const int row, const int column,const int exitNum);
+		Map() = default;
 		~Map();
 
 		int getExitNumber() { return m_exitNum; }

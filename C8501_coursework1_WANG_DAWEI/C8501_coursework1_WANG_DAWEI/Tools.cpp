@@ -46,3 +46,27 @@ void maze1::Tools::writeFile(const std::string& content, const std::string& path
 	file << content;
 	file.close();
 }
+
+bool maze1::Tools::hasFile(const std::string& path) {
+	std::fstream _file;
+	_file.open(path, std::ios::in);
+	_file.close();
+	return (!_file)?false:true;
+	/*if (!_file)
+	{
+		std::cout << 111;
+		return false;
+	}
+	else {
+		std::cout << 222;
+		return true;
+	}*/
+}
+
+int maze1::Tools::getNumber(const std::string& discribe) {
+	std::cout <<discribe<<"\n";
+	int temp{};
+	std::cin >> temp;
+	std::cin.ignore(32767, '\n');
+	return temp;
+}
