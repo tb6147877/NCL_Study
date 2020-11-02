@@ -6,6 +6,7 @@
 #include <functional>
 #include <utility>
 #include <windows.h>
+#include <string>
 
 #include "Unit.h"
 #include "Tools.h"
@@ -46,7 +47,9 @@ namespace maze1 {
 		std::pair<int, int> getCenter() { return std::pair<int, int>{m_centerX, m_centerY}; }
 		std::vector<Unit*> getExits() { return m_exits; }
 		bool checkHasPath(std::vector<Unit*>& arr);
-		void draw();
+		void draw(const bool isDrawPath=true);
+		void serialize(const std::string& path);
+		void unserialize(const std::string& path);
 	};
 
 }

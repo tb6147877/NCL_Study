@@ -13,7 +13,7 @@ maze1::Unit::Unit(const int x, const int y, const UnitType type, const MapType m
 
 maze1::Unit::~Unit() {}
 
-void maze1::Unit::draw() {
+void maze1::Unit::draw(const bool isDrawPath) {
 	switch (m_type)
 	{
 	case UnitType::SPACE:
@@ -29,11 +29,34 @@ void maze1::Unit::draw() {
 		std::cout <<YELLOW<< "E"<<RESET;
 		break;
 	case UnitType::PATH:
-		std::cout <<GREEN<< "o"<<RESET;
+		if (isDrawPath)
+		{
+			std::cout << GREEN << "o" << RESET;
+		}
+		else {
+			std::cout << " ";
+		}
+		
 		break;
 	}
 }
 
 std::pair<int, int> maze1::Unit::getCoordinate() {
 	return std::pair<int, int>{m_x, m_y};
+}
+
+char maze1::Unit::getGraphic() {
+	switch (m_type)
+	{
+	case UnitType::SPACE:
+		return ' ';
+	case UnitType::ORIGIN:
+		return 'S';
+	case UnitType::WALL:
+		return 'X';
+	case UnitType::EXIT:
+		return 'E';
+	case UnitType::PATH:
+		return 'o';
+	}
 }

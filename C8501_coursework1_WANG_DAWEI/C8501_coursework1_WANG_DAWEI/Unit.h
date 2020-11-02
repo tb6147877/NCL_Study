@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <utility>
+#include <string>
 
 namespace maze1 {
 	class Unit
@@ -35,7 +36,8 @@ namespace maze1 {
 		UnitType getUnitType() { return m_type; }
 		MapType getMapType() { return m_mapType; }
 		std::pair<int,int> getCoordinate();
-		void draw();
+		void draw(const bool isDrawPath=true);
+		char getGraphic();
 	};
 }
 

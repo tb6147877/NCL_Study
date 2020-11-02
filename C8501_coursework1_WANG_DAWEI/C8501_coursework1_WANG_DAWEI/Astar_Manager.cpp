@@ -138,7 +138,7 @@ bool maze1::Astar_Manager::findPath(const std::pair<int, int>& origin, const std
 			std::cout << "Find!\n";
 			generatePath(curGrid);
 			flag = true;
-			//break;
+			break;
 		}
 		std::vector<Astar_Grid*> temp{selectAroundGrid(curGrid)};
 		for (int i = 0; i < temp.size(); i++)

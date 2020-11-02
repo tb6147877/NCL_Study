@@ -18,8 +18,8 @@ maze1::Unit::MapType maze1::Map::judgeMapType(const int x, const int y) {
 }
 
 maze1::Unit::UnitType maze1::Map::randomUnitType() {
-	int temp{ Tools::getRamdom(1,m_exitNum)};
-	Unit::UnitType type = temp == 1 ? Unit::UnitType::WALL : Unit::UnitType::SPACE;
+	int temp{ Tools::getRamdom(0,m_exitNum)};
+	Unit::UnitType type = temp == 0? Unit::UnitType::WALL : Unit::UnitType::SPACE;
 	return type;
 	
 }
@@ -194,14 +194,40 @@ bool maze1::Map::checkHasPath(std::vector<Unit*>& arr) {
 	return flag;
 }
 
-void maze1::Map::draw() {
+void maze1::Map::draw(const bool isDrawPath) {
 	for (int i = 0; i < m_row; i++)
 	{
 		for (int j = 0; j < m_column; j++)
 		{
-			m_units[i][j]->draw();
+			m_units[i][j]->draw(isDrawPath);
 		}
 		std::cout << "\n";
+	}
+}
+
+void maze1::Map::serialize(const std::string& path) {
+	std::string str{""};
+	for (int i = 0; i < m_row; i++)
+	{
+		for (int j = 0; j < m_column; j++)
+		{
+			str+=m_units[i][j]->getGraphic();
+		}
+		if (i != m_row-1)
+		{
+			str += '\n';
+		}
+	}
+	Tools::writeFile(str, path);
+}
+
+
+void maze1::Map::unserialize(const std::string& path) {
+	int row{ 0 }, column{ 0 };
+	std::vector<std::string> str = maze1::Tools::readFile(path, row, column);
+	for (int i = 0; i < str.size(); i++)
+	{
+		std::cout << str[i] << "\n";
 	}
 }
 
