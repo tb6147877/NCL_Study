@@ -1,5 +1,6 @@
 #include "Map.h"
 
+//decide what a MapType it is of a position on the map
 maze1::Unit::MapType maze1::Map::judgeMapType(const int x, const int y) {
 	Unit::MapType temp{ Unit::MapType::NORMAL };
 	if (x==m_centerX and y==m_centerY)
@@ -17,13 +18,16 @@ maze1::Unit::MapType maze1::Map::judgeMapType(const int x, const int y) {
 	return temp;
 }
 
+//random a UnitType
 maze1::Unit::UnitType maze1::Map::randomUnitType() {
+	//random wall independent on exit number, more exits less walls
 	int temp{ Tools::getRamdom(0,m_exitNum)};
 	Unit::UnitType type = temp == 0? Unit::UnitType::WALL : Unit::UnitType::SPACE;
 	return type;
 	
 }
 
+//generate a unit 
 maze1::Unit* maze1::Map::generateUnit(const int x, const int y) {
 	Unit::MapType mapType = judgeMapType(x, y);
 	Unit::UnitType unitType{};
@@ -46,12 +50,13 @@ maze1::Unit* maze1::Map::generateUnit(const int x, const int y) {
 	return generateUnit(x,y,unitType,mapType);
 }
 
+//actually generate a unit 
 maze1::Unit* maze1::Map::generateUnit(const int x, const int y, const Unit::UnitType type, const Unit::MapType mapType) {
 	return new Unit{ x,y ,type,mapType };
 }
 
+//generate the whole map
 void maze1::Map::initMap() {
-	//TODO IF DON'T HAVE PATH, RECREATE UNITS
 	if (m_generateTimes==0)
 	{
 		for (int i = 0; i < m_row; i++)
@@ -66,9 +71,10 @@ void maze1::Map::initMap() {
 	else {
 		reduceWall();
 	}
-	
 }
 
+//go through every unit on the map and excute the function
+//para:a function pointer
 void maze1::Map::walkMap(const std::function<void(Unit* unit, Map* map)>& func) {
 	for (int i = 0; i < m_row; i++)
 	{
@@ -79,9 +85,11 @@ void maze1::Map::walkMap(const std::function<void(Unit* unit, Map* map)>& func) 
 	}
 }
 
+//set exits on the map
 void maze1::Map::setExit() {
 	int curNum{ 0 };
 	std::vector<Unit*> edges{};
+	//1.get all the unit which can be a exit
 	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
 				if (unit->getMapType()==Unit::MapType::EDGE and (not isBlindUnit(unit)))
 				{
@@ -94,6 +102,8 @@ void maze1::Map::setExit() {
 		std::cout << "Error: Exit number:" << m_exitNum << " is greater than edges:" << edges.size() << '\n';
 		return;
 	}
+
+	//produce exits
 	std::vector<int> exits{};
 	do
 	{
@@ -110,13 +120,17 @@ void maze1::Map::setExit() {
 			exits.push_back(temp);
 		}
 	} while (exits.size()<m_exitNum);
+
 	for (auto  item: exits)
 	{
+		//set unit type
 		edges[item]->setUnitType(Unit::UnitType::EXIT);
+		//store exits
 		m_exits.push_back(edges[item]);
 	}
 }
 
+//if the map don't have a path, this function is needed
 void maze1::Map::reduceWall() {
 	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
 				if (unit->getMapType() == Unit::MapType::NORMAL and unit->getUnitType()==Unit::UnitType::WALL)
@@ -127,6 +141,7 @@ void maze1::Map::reduceWall() {
 	walkMap(func);
 }
 
+//in the map, there is 4 points cannot be an exit because they can lead to no path, there are 4 corners
 bool maze1::Map::isBlindUnit(Unit* unit) {
 	//These units cannot access
 	//Left-Top
@@ -157,12 +172,13 @@ maze1::Map::Map(const int row, const int column, const int exitNum)
 	{
 		initMap();
 		++m_generateTimes;
-	} while (not checkHasPath(arr));
+	} while (not checkHasPath(arr));//check wether there is a path
 	std::cout << "The map generates " << m_generateTimes << " times.\n\n";
 }
 
 
 maze1::Map::~Map() {
+	//free memory
 	if (m_units.size()==0)
 	{
 		return;
@@ -173,12 +189,16 @@ maze1::Map::~Map() {
 	walkMap(func);
 }
 
+//check wether this map has a path
 bool maze1::Map::checkHasPath(std::vector<Unit*>& arr) {
 	bool flag{ true };
 	for (int i = 0; i < getExits().size(); i++)
 	{
-		maze1::Astar_Manager mgr{ m_units,getMapScale() };
+		//call Astar path finding
+		maze1::Astar_Manager mgr{ m_units, getMapScale() };
 		maze1::Unit* target{ getExits()[i] };
+
+		//if this exit has a path,skip
 		if (std::find(arr.begin(), arr.end(), target) != arr.end())
 			continue;
 		std::cout << "Searching:" << target->getCoordinate().first << "  " << target->getCoordinate().second << "\n";
@@ -198,6 +218,8 @@ bool maze1::Map::checkHasPath(std::vector<Unit*>& arr) {
 	return flag;
 }
 
+//draw the whole map
+//para:if isDrawPath equals true, path symbol 'o' will be draw; otherwise draw space symbol ' '
 void maze1::Map::draw(const bool isDrawPath) {
 	for (int i = 0; i < m_row; i++)
 	{
@@ -209,6 +231,7 @@ void maze1::Map::draw(const bool isDrawPath) {
 	}
 }
 
+//save map to disk
 void maze1::Map::serialize(const std::string& path) {
 	std::string str{""};
 	for (int i = 0; i < m_row; i++)
@@ -225,7 +248,7 @@ void maze1::Map::serialize(const std::string& path) {
 	Tools::writeFile(str, path);
 }
 
-
+//read file from disk
 void maze1::Map::unserialize(const std::string& path) {
 	int row{ 0 }, column{ 0 };
 	std::vector<std::string> str = maze1::Tools::readFile(path, row, column);

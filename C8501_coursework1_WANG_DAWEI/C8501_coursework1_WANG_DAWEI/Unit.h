@@ -5,6 +5,7 @@
 #include <string>
 
 namespace maze1 {
+	//Unit is a point on the map
 	class Unit
 	{
 	public:
@@ -30,12 +31,16 @@ namespace maze1 {
 		MapType m_mapType;
 
 	public:
+		//Unit is a point on the map, x is its row number, y is its column number
+		//type is itself type, mapType is a type in the map
 		Unit(const int x, const int y, const UnitType type,const MapType mapType) ;
 		~Unit();
 		void setUnitType(const UnitType type) { m_type = type; }
 		UnitType getUnitType() { return m_type; }
 		MapType getMapType() { return m_mapType; }
 		std::pair<int,int> getCoordinate();
+
+		//show the unit on the screen
 		void draw(const bool isDrawPath=true);
 		char getGraphic();
 	};

@@ -52,21 +52,21 @@ bool maze1::Tools::hasFile(const std::string& path) {
 	_file.open(path, std::ios::in);
 	_file.close();
 	return (!_file)?false:true;
-	/*if (!_file)
-	{
-		std::cout << 111;
-		return false;
-	}
-	else {
-		std::cout << 222;
-		return true;
-	}*/
 }
 
-int maze1::Tools::getNumber(const std::string& discribe) {
-	std::cout <<discribe<<"\n";
-	int temp{};
-	std::cin >> temp;
-	std::cin.ignore(32767, '\n');
-	return temp;
+std::string  maze1::Tools::getDesktopPath()
+{
+	LPITEMIDLIST pidl;
+	LPMALLOC pShellMalloc;
+	char szDir[200];
+	if (SUCCEEDED(SHGetMalloc(&pShellMalloc)))
+	{
+		if (SUCCEEDED(SHGetSpecialFolderLocation(NULL, CSIDL_DESKTOP, &pidl))) {
+			SHGetPathFromIDListA(pidl, szDir);
+			pShellMalloc->Free(pidl);
+		}
+		pShellMalloc->Release();
+	}
+
+	return std::string(szDir);
 }

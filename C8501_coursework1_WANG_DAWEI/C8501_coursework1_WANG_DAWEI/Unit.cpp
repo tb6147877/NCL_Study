@@ -8,6 +8,8 @@
 #define YELLOW "\033[33m" /* Yellow */
 #define BLUE "\033[34m" /* Blue */
 
+//Unit is a point on the map, x is its row number, y is its column number
+//type is itself type, mapType is a type in the map
 maze1::Unit::Unit(const int x, const int y, const UnitType type, const MapType mapType) 
 	:m_x{ x }, m_y{ y }, m_type{ type }, m_mapType{mapType}{}
 

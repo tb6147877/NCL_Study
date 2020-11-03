@@ -3,6 +3,7 @@
 #include <utility>
 #include <fstream>
 
+
 #include "Map.h"
 #include "Tools.h"
 #include "Astar_Manager.h"
@@ -15,6 +16,8 @@
 #define YELLOW "\033[33m" /* Yellow */
 #define BLUE "\033[34m" /* Blue */
 
+//keep asking an option from user, and do the validity check
+//return: 1 or 2
 int askOption() {
 	while (true)
 	{
@@ -38,6 +41,9 @@ int askOption() {
 	}
 }
 
+//keep asking a number from user, and do the validity check
+//para: the number must greater than max
+//return: the number 
 int askRowAndCol(const int max) {
 	while (true)
 	{
@@ -60,6 +66,9 @@ int askRowAndCol(const int max) {
 	}
 }
 
+//keep asking a number from user, and do the validity check
+//para: the number must equal or less than max
+//return: the number 
 int askExitNum(const int max) {
 	while (true)
 	{
@@ -82,6 +91,8 @@ int askExitNum(const int max) {
 	}
 }
 
+//keep asking a file path from user, and check if there is a file in the path 
+//return: the path 
 std::string askPath() {
 	std::string str{ "" };
 	while (true)
@@ -101,6 +112,18 @@ std::string askPath() {
 	}
 }
 
+//ask a string from user
+//return: the string
+std::string askString() {
+	std::string str{ "" };
+	std::cin >> str;
+	std::cin.ignore(32767, '\n');
+	return str;
+}
+
+
+//Save the map
+//para:a reference of map class
 void doMapSave(maze1::Map& map) {
 	std::cout << "#############################################################################" << "\n";
 	std::cout << "Do you want to save your map? (1-yes/2-no)" << "\n";
@@ -109,9 +132,11 @@ void doMapSave(maze1::Map& map) {
 
 	if (opt==1)
 	{
-		std::cout << "Please enter the absolute path to save your map" << "\n";
-		std::string path{ askPath() };
+		std::cout << "Please enter a file name to save your map" << "\n";
+		std::string name{ askString() };
+		std::string path{ maze1::Tools::getDesktopPath() + '/' + name };
 		map.serialize(path);
+		std::cout << "Your map file has been saved in "<<path << "\n";
 		std::cout << "Program End! Thank you!" << "\n";
 	}
 	else {
@@ -119,6 +144,7 @@ void doMapSave(maze1::Map& map) {
 	}
 }
 
+//generate an object of map class to do generating map and finding path
 void doMapGenerate() {
 	std::cout << "#############################################################################" << "\n";
 	std::cout << "Welcome to Map Generating&Path Finding, please enter the ROW number of your map" << "\n";
@@ -138,6 +164,7 @@ void doMapGenerate() {
 	doMapSave(map);
 }
 
+//load map and show map with a map object
 void doMapLoad() {
 	std::cout << "#############################################################################" << "\n";
 	std::cout << "Welcome to Map Loading, please enter the absolute path of your map" << "\n";
@@ -146,6 +173,8 @@ void doMapLoad() {
 	map.unserialize(path);
 	std::cout << "Program End! Thank you!" << "\n";
 }
+
+
 
 int main()
 {

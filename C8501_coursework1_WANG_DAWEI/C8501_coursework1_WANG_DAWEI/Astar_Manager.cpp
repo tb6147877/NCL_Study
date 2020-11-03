@@ -1,5 +1,6 @@
 #include "Astar_Manager.h"
 
+//generate grids for A star path finding
 void maze1::Astar_Manager::initGrids() {
 	for (int i = 0; i < m_mapScale.first; i++)
 	{
@@ -10,6 +11,7 @@ void maze1::Astar_Manager::initGrids() {
 	}
 }
 
+//find path by grids' parent
 void maze1::Astar_Manager::generatePath(Astar_Grid* grid) {
 	if (grid->getParent()!=nullptr)
 	{
@@ -21,6 +23,7 @@ void maze1::Astar_Manager::generatePath(Astar_Grid* grid) {
 	}
 }
 
+//collect grids which can be a path around a grid
 std::vector<maze1::Astar_Grid*> maze1::Astar_Manager::selectAroundGrid(Astar_Grid* grid) {
 	std::vector<maze1::Astar_Grid*> temp{};
 
@@ -44,17 +47,20 @@ std::vector<maze1::Astar_Grid*> maze1::Astar_Manager::selectAroundGrid(Astar_Gri
 
 	for (int i = 0; i < grids.size(); i++)
 	{
+		//out of map, skip
 		if (grids[i].first < 0 or grids[i].second < 0
 			or grids[i].first >= m_mapScale.first or grids[i].second >= m_mapScale.second)
 		{
 			continue;
 		}
 
+		//it is a wall, skip
 		if (m_grids[grids[i].first][grids[i].second]->getType() == Unit::UnitType::WALL)
 		{
 			continue;
 		}
 
+		//close list has contain this grid, skip
 		if (std::find(m_closeList.begin(), m_closeList.end(), m_grids[grids[i].first][grids[i].second]) != m_closeList.end())
 		{
 			continue;
@@ -64,18 +70,22 @@ std::vector<maze1::Astar_Grid*> maze1::Astar_Manager::selectAroundGrid(Astar_Gri
 	return temp;
 }
 
+//calculate Manhattan Distance
 int maze1::Astar_Manager::calculManhattanDis(Astar_Grid* cur, Astar_Grid* target) {
 	return (abs(target->getCoordinate().first - cur->getCoordinate().first) + abs(target->getCoordinate().second - cur->getCoordinate().second)) * 10;
 }
 
+//calculate Manhattan Distance
 int maze1::Astar_Manager::calculManhattanDis(const std::pair<int, int>& cur, const std::pair<int, int>& target) {
 	return (abs(target.first - cur.first) + abs(target.second - cur.second)) * 10;
 }
 
+//judge is grid in open list
 bool maze1::Astar_Manager::isGridInOpenList(Astar_Grid* target) {
 	return std::find(m_openList.begin(), m_openList.end(), target) != m_openList.end();
 }
 
+//sort open list, bubble sort
 void maze1::Astar_Manager::updateOpenList() {
 	for (int i = 0; i < m_openList.size() - 1; i++)
 	{
@@ -91,6 +101,7 @@ void maze1::Astar_Manager::updateOpenList() {
 	}
 }
 
+//remove element from open list
 void maze1::Astar_Manager::removeElementFromOpenList(Astar_Grid* target) {
 	for (auto it = m_openList.begin(); it != m_openList.end();)
 	{
@@ -114,6 +125,7 @@ maze1::Astar_Manager::Astar_Manager(const std::vector<std::vector<maze1::Unit*>>
 
 
 maze1::Astar_Manager::~Astar_Manager() {
+	//free memory
 	for (int i = 0; i < m_mapScale.first; i++)
 	{
 		for (int j = 0; j < m_mapScale.second; j++)
@@ -124,15 +136,19 @@ maze1::Astar_Manager::~Astar_Manager() {
 	std::cout << "Mgr destroy\n";
 }
 
+//core function of A star path finding
 bool maze1::Astar_Manager::findPath(const std::pair<int, int>& origin, const std::pair<int, int>& target) {
 	bool flag{ true };
 	Astar_Grid* start{ m_grids[origin.first][origin.second] };
 	m_openList.push_back(start);
 	Astar_Grid* curGrid{ start };
+
+	//if open list has grids or do not find target, it will loop 
 	while (m_openList.size()>0 and curGrid->getCoordinate() != target)
 	{
 		curGrid = m_openList[0];
-		//curGrid->getType() == Unit::UnitType::EXIT and 
+		
+		//if find target
 		if (curGrid->getCoordinate()==target)
 		{
 			std::cout << "Find!\n";
@@ -141,6 +157,7 @@ bool maze1::Astar_Manager::findPath(const std::pair<int, int>& origin, const std
 			break;
 		}
 		std::vector<Astar_Grid*> temp{selectAroundGrid(curGrid)};
+		//calculate f,g,h value of grids
 		for (int i = 0; i < temp.size(); i++)
 		{
 			int g = curGrid->get_g_value() + 10;

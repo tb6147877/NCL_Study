@@ -6,6 +6,7 @@
 #include "Unit.h"
 
 namespace maze1 {
+	//this class extend unit class and is used to A star path finding
 	class Astar_Grid
 	{
 	private:
