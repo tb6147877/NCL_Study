@@ -6,6 +6,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <stdio.h>
+#include <conio.h>
 
 #include "windows.h"
 #include "shlobj.h"
@@ -34,6 +36,9 @@ namespace maze2 {
 		//get windows desktop path
 		//return:the path
 		static std::string getDesktopPath();
+
+		//move cursor to a specific line
+		void resetCursor(const int yOffset, const std::string& str = "");
 	};
 
 }

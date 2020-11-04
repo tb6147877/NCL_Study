@@ -211,7 +211,7 @@ int main()
 		std::cout << 222;
 	}*/
 
-	maze2::Map map{ 29,21,2 };
+	maze2::Map map{ 15,15,1 };
 	map.draw();
 	/*map.serialize("C:/Users/10626/Desktop/cpp_test1");
 	std::cout << "\n=================================\n";

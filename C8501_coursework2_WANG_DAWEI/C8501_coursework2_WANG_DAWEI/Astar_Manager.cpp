@@ -9,6 +9,7 @@ void maze2::Astar_Manager::generatePath(Astar_Grid* grid) {
 			grid->setUnitType(Unit::UnitType::PATH);
 		}
 		generatePath(grid->getParent());
+		m_path.push_back(grid);
 	}
 }
 
@@ -92,7 +93,7 @@ void maze2::Astar_Manager::updateOpenList() {
 }
 
 //remove element from open list
-void maze2::Astar_Manager::removeElementFromOpenList(Astar_Grid* target) {
+void maze2::Astar_Manager::removeGridFromOpenList(Astar_Grid* target) {
 	for (auto it = m_openList.begin(); it != m_openList.end();)
 	{
 		if (target == *it) {
@@ -108,7 +109,7 @@ void maze2::Astar_Manager::removeElementFromOpenList(Astar_Grid* target) {
 //=======================================================
 
 maze2::Astar_Manager::Astar_Manager(const std::vector<std::vector<maze2::Unit*>>& units, const std::pair<int, int>& mapScale) 
-	:m_grids{ units} , m_openList{}, m_closeList{}, m_mapScale{ mapScale }
+	:m_grids{ units }, m_openList{}, m_closeList{}, m_mapScale{ mapScale }, m_path{}
 {
 }
 
@@ -157,7 +158,7 @@ bool maze2::Astar_Manager::findPath(const std::pair<int, int>& origin, const std
 			updateOpenList();
 		}
 		m_closeList.push_back(curGrid);
-		removeElementFromOpenList(curGrid);
+		removeGridFromOpenList(curGrid);
 		if (m_openList.size()==0)
 		{
 			flag = false;
@@ -167,3 +168,4 @@ bool maze2::Astar_Manager::findPath(const std::pair<int, int>& origin, const std
 
 	return flag;
 }
+

@@ -55,6 +55,9 @@ namespace maze2 {
 
 		//in the map, there is 4 points cannot be an exit because they can lead to no path, there are 4 corners
 		bool isBlindUnit(Unit* unit);
+
+		//reset grids, switch grids to original state
+		void resetUnits();
 	public:
 		Map(const int row, const int column,const int exitNum);
 		Map() = default;

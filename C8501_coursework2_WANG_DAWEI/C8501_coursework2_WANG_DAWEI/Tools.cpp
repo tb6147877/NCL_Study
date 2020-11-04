@@ -70,3 +70,12 @@ std::string  maze2::Tools::getDesktopPath()
 
 	return std::string(szDir);
 }
+
+void maze2::Tools::resetCursor(const int yOffset, const std::string& str) {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(hConsole, &csbi);
+	COORD pos = { 0, csbi.dwCursorPosition.Y + yOffset };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+	std::cout << str;
+}

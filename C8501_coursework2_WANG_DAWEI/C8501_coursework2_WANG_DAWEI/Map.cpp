@@ -21,7 +21,7 @@ maze2::Unit::MapType maze2::Map::judgeMapType(const int x, const int y) {
 //random a UnitType
 maze2::Unit::UnitType maze2::Map::randomUnitType() {
 	//random wall independent on exit number, more exits less walls
-	int temp{ Tools::getRamdom(0,m_exitNum)};
+	int temp{ Tools::getRamdom(0,m_exitNum * 2)};
 	Unit::UnitType type = temp == 0? Unit::UnitType::WALL : Unit::UnitType::SPACE;
 	return type;
 	
@@ -158,6 +158,19 @@ bool maze2::Map::isBlindUnit(Unit* unit) {
 	if (unit->getCoordinate().first == m_row - 1 and unit->getCoordinate().second == m_column - 1)
 		return true;
 	return false;
+}
+
+//reset grids, switch grids to original state
+void maze2::Map::resetUnits() {
+	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
+				std::cout << "11111\n";
+				if (unit->getUnitType() == Unit::UnitType::PATH)
+				{
+					unit->setUnitType(Unit::UnitType::SPACE);
+					std::cout << "22222\n";
+				}
+	} };
+	walkMap(func);
 }
 
 //=================================================================

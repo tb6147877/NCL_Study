@@ -20,6 +20,8 @@ namespace maze2 {
 
 		std::pair<int, int> m_mapScale;
 
+		std::vector<Unit*> m_path;
+
 		//find path by grids' parent
 		void generatePath(Astar_Grid* grid);
 
@@ -37,12 +39,15 @@ namespace maze2 {
 		void updateOpenList();
 
 		//remove element from open list
-		void removeElementFromOpenList(Astar_Grid* target);
+		void removeGridFromOpenList(Astar_Grid* target);
+
+		
 	public:
 		Astar_Manager(const std::vector<std::vector<maze2::Unit*>>& units,const std::pair<int, int>& mapScale);
 		~Astar_Manager();
 
 		//core function of A star path finding
 		bool findPath(const std::pair<int, int>& origin, const std::pair<int, int>& target);
+		std::vector<Unit*> getPath() { return m_path; }
 	};
 }
