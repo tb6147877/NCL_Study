@@ -15,7 +15,12 @@ maze2::Unit::Unit(const int x, const int y, const UnitType type, const MapType m
 
 maze2::Unit::~Unit() {}
 
-void maze2::Unit::draw(const bool isDrawPath) {
+void maze2::Unit::draw(const bool isDrawPath,  const bool isDrawPlayer) {
+	if (isDrawPlayer)
+	{
+		std::cout << BLUE << "P";
+		return;
+	}
 	switch (m_type)
 	{
 	case UnitType::SPACE:
@@ -38,7 +43,6 @@ void maze2::Unit::draw(const bool isDrawPath) {
 		else {
 			std::cout << " ";
 		}
-		
 		break;
 	}
 }

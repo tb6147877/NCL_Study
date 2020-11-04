@@ -8,8 +8,8 @@ void maze2::Astar_Manager::generatePath(Astar_Grid* grid) {
 		{
 			grid->setUnitType(Unit::UnitType::PATH);
 		}
+		m_path.push(grid);
 		generatePath(grid->getParent());
-		m_path.push_back(grid);
 	}
 }
 

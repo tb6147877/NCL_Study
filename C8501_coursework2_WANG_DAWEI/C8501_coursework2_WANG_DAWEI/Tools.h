@@ -38,7 +38,7 @@ namespace maze2 {
 		static std::string getDesktopPath();
 
 		//move cursor to a specific line
-		void resetCursor(const int yOffset, const std::string& str = "");
+		static void resetCursor(const int yOffset, const std::string& str = "");
 	};
 
 }

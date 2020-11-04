@@ -41,7 +41,7 @@ namespace maze2 {
 		std::pair<int,int> getCoordinate();
 
 		//show the unit on the screen
-		void draw(const bool isDrawPath=true);
+		void draw(const bool isDrawPath=true,  const bool isDrawPlayer = false);
 		char getGraphic();
 		virtual void print() { std::cout << "This is Base class"; }
 	};

@@ -6,6 +6,7 @@
 #include <utility>
 #include <cmath>
 #include <algorithm>
+#include <queue>
 
 #include "Astar_Grid.h"
 #include "Unit.h"
@@ -20,7 +21,7 @@ namespace maze2 {
 
 		std::pair<int, int> m_mapScale;
 
-		std::vector<Unit*> m_path;
+		std::queue<Unit*> m_path;
 
 		//find path by grids' parent
 		void generatePath(Astar_Grid* grid);
@@ -48,6 +49,6 @@ namespace maze2 {
 
 		//core function of A star path finding
 		bool findPath(const std::pair<int, int>& origin, const std::pair<int, int>& target);
-		std::vector<Unit*> getPath() { return m_path; }
+		std::queue<Unit*> getPath() { return m_path; }
 	};
 }

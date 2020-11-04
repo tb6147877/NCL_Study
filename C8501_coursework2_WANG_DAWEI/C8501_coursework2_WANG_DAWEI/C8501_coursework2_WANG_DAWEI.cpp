@@ -211,8 +211,13 @@ int main()
 		std::cout << 222;
 	}*/
 
-	maze2::Map map{ 15,15,1 };
+	maze2::Map map{ 10,10,1 };
+	/*maze2::PlayerMoveController ctrl{};
+	map.setPlayerMoveController(ctrl);*/
 	map.draw();
+	std::cout << "\n=================================\n";
+	map.playMap();
+
 	/*map.serialize("C:/Users/10626/Desktop/cpp_test1");
 	std::cout << "\n=================================\n";
 	map.unserialize("C:/Users/10626/Desktop/cpp_test1");*/

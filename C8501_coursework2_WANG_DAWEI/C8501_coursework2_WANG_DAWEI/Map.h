@@ -11,6 +11,7 @@
 #include "Tools.h"
 #include "MazeConfig.h"
 #include "Astar_Manager.h"
+#include "PlayerMoveController.h"
 
 
 namespace maze2 {
@@ -27,6 +28,7 @@ namespace maze2 {
 
 		int m_generateTimes;
 		std::vector<Unit*> m_exits;
+		PlayerMoveController m_moveCtrl;
 
 		//decide what a MapType it is of a position on the map
 		Unit::MapType judgeMapType(const int x, const int y);
@@ -68,6 +70,7 @@ namespace maze2 {
 		std::pair<int, int> getMapScale() { return std::pair<int, int>{m_row, m_column}; }
 		std::pair<int, int> getCenter() { return std::pair<int, int>{m_centerX, m_centerY}; }
 		std::vector<Unit*> getExits() { return m_exits; }
+		void setPlayerMoveController(const PlayerMoveController& ctrl) { m_moveCtrl = ctrl; }
 
 		//check wether this map has a path
 		//para::arr stores exits which have find path
@@ -75,13 +78,17 @@ namespace maze2 {
 
 		//draw the whole map
 		//para:if isDrawPath equals true, path symbol 'o' will be draw; otherwise draw space symbol ' '
-		void draw(const bool isDrawPath=true);
+		void draw(const bool isDrawPath=true, const bool isDrawPlayer = false);
 
 		//save map to disk
 		void serialize(const std::string& path);
 
 		//read file from disk
 		void unserialize(const std::string& path);
+
+		//let the players move on the map
+		void playMap();
+
 	};
 
 }

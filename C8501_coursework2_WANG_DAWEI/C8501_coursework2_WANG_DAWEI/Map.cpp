@@ -176,7 +176,7 @@ void maze2::Map::resetUnits() {
 //=================================================================
 
 maze2::Map::Map(const int row, const int column, const int exitNum)
-	:m_row{ row }, m_column{ column }, m_exitNum{ exitNum }, m_units{ (unsigned int)row,std::vector<Unit*>{(unsigned int)column} }
+	:m_row{ row }, m_column{ column }, m_exitNum{ exitNum }, m_units{ (unsigned int)row,std::vector<Unit*>{(unsigned int)column} }, m_moveCtrl{}
 {
 	m_centerX = m_row / 2;
 	m_centerY = m_column / 2;
@@ -220,11 +220,14 @@ bool maze2::Map::checkHasPath(std::vector<Unit*>& arr) {
 		flag = mgr.findPath(getCenter(), target->getCoordinate());
 		if (not flag)
 		{
+			//there is not a path
 			std::cout << "Searching Failed!\n";
 			break;
 		}
 		else {
+			//there is a path
 			arr.push_back(target);
+			m_moveCtrl.insertPath(mgr.getPath());
 		}
 	}
 	std::cout << "--------------------------------------\n";
@@ -235,12 +238,12 @@ bool maze2::Map::checkHasPath(std::vector<Unit*>& arr) {
 
 //draw the whole map
 //para:if isDrawPath equals true, path symbol 'o' will be draw; otherwise draw space symbol ' '
-void maze2::Map::draw(const bool isDrawPath) {
+void maze2::Map::draw(const bool isDrawPath, const bool isDrawPlayer) {
 	for (int i = 0; i < m_row; i++)
 	{
 		for (int j = 0; j < m_column; j++)
 		{
-			m_units[i][j]->draw(isDrawPath);
+			m_units[i][j]->draw(isDrawPath,isDrawPlayer);
 		}
 		std::cout << "\n";
 	}
@@ -271,5 +274,32 @@ void maze2::Map::unserialize(const std::string& path) {
 	{
 		std::cout << str[i] << "\n";
 	}
+}
+
+
+void maze2::Map::playMap() {
+	std::vector<Unit*> players;
+	do
+	{
+		players = m_moveCtrl.getPlayersPosition();
+		for (int i = 0; i < m_row; i++)
+		{
+			for (int j = 0; j < m_column; j++)
+			{
+				if (std::find(players.begin(), players.end(), m_units[i][j]) != players.end())
+				{
+					m_units[i][j]->draw(false, true);
+				}
+				else {
+					m_units[i][j]->draw(false);
+				}
+			}
+			std::cout << "\n";
+		}
+
+		Sleep(800);
+		Tools::resetCursor(-m_row);
+	} while (players.size()!=0);
+	Tools::resetCursor(m_row);
 }
 
