@@ -7,6 +7,11 @@
 #define GREEN "\033[32m" /* Green */
 #define YELLOW "\033[33m" /* Yellow */
 #define BLUE "\033[34m" /* Blue */
+#define BOLDGREEN "\033[1m\033[32m" /* Bold Green */
+#define BOLDYELLOW "\033[1m\033[33m" /* Bold Yellow */
+#define BOLDRED "\033[1m\033[31m" /* Bold Red */
+#define BOLDCYAN "\033[1m\033[36m" /* Bold Cyan */
+#define BOLDBLUE "\033[1m\033[34m" /* Bold Blue */
 
 //Unit is a point on the map, x is its row number, y is its column number
 //type is itself type, mapType is a type in the map
@@ -18,7 +23,7 @@ maze2::Unit::~Unit() {}
 void maze2::Unit::draw(const bool isDrawPath,  const bool isDrawPlayer) {
 	if (isDrawPlayer)
 	{
-		std::cout << BLUE << "P";
+		std::cout << BOLDYELLOW << "P" << RESET;
 		return;
 	}
 	switch (m_type)
@@ -27,18 +32,18 @@ void maze2::Unit::draw(const bool isDrawPath,  const bool isDrawPlayer) {
 		std::cout << " ";
 		break;
 	case UnitType::ORIGIN:
-		std::cout << RED<<"F"<<RESET;
+		std::cout << BOLDRED<<"F"<<RESET;
 		break;
 	case UnitType::WALL:
-		std::cout <<CYAN<< "X"<<RESET;
+		std::cout <<BOLDCYAN<< "X"<<RESET;
 		break;
 	case UnitType::EXIT:
-		std::cout <<YELLOW<< "E"<<RESET;
+		std::cout <<BOLDBLUE<< "E"<<RESET;
 		break;
 	case UnitType::PATH:
 		if (isDrawPath)
 		{
-			std::cout << GREEN << "o" << RESET;
+			std::cout << BOLDGREEN << "o" << RESET;
 		}
 		else {
 			std::cout << " ";

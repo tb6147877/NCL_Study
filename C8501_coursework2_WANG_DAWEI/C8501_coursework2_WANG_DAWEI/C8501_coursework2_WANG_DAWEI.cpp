@@ -212,20 +212,18 @@ int main()
 		std::cout << 222;
 	}*/
 
-	//maze2::Map map{ 15,15,2 };
-	///*maze2::PlayerMoveController ctrl{};
-	//map.setPlayerMoveController(ctrl);*/
-	//map.draw();
-	//std::cout << "\n=================================\n";
-	//map.playMap();
+	maze2::Map map{ 15,15,2 };
+	map.draw();
+	std::cout << "\n=================================\n";
+	map.playMap();
 
 
 
-	maze2::Map map{ maze2::MapBuilder::buildMap("C:/Users/10626/Desktop/cpp_test1") };
+	/*maze2::Map map{ maze2::MapBuilder::buildMap("C:/Users/10626/Desktop/cpp_test1") };
 	map.draw();
 	std::cout << "\n=================================\n";
 	map.findPathForEveryExit();
-	map.playMap();
+	map.playMap();*/
 
 
 	//map.serialize("C:/Users/10626/Desktop/cpp_test1");
