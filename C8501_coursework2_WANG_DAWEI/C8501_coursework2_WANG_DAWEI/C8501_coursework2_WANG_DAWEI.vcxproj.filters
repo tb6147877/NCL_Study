@@ -36,6 +36,9 @@
     <ClCompile Include="PlayerMoveController.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MapBuilder.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Astar_Grid.h">
@@ -57,6 +60,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="PlayerMoveController.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MapBuilder.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

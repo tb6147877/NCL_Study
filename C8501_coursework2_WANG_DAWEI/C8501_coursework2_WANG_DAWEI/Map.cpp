@@ -191,6 +191,9 @@ maze2::Map::Map(const int row, const int column, const int exitNum)
 	std::cout << "The map generates " << m_generateTimes << " times.\n\n";
 }
 
+maze2::Map::Map(const std::vector<std::vector<maze2::Unit*>>& units, const int row, const int column, const int exitNum, const int centerX, const int centerY, const std::vector<Unit*>& exits) 
+	:m_units{ units }, m_row{ row }, m_column{ column }, m_exitNum{ exitNum }, m_centerX{ centerX }, m_centerY{ centerY }, m_exits{exits}, m_moveCtrl{}
+{}
 
 maze2::Map::~Map() {
 	//free memory
@@ -236,6 +239,18 @@ bool maze2::Map::checkHasPath(std::vector<Unit*>& arr) {
 	return flag;
 }
 
+
+void maze2::Map::findPathForEveryExit() {
+	for (int i = 0; i < m_exits.size(); i++)
+	{
+		maze2::Astar_Manager mgr{ m_units, getMapScale() };
+		maze2::Unit* target{ getExits()[i] };
+		std::pair<int, int> temp{ target->getCoordinate() };
+		mgr.findPath(getCenter(), temp);
+		m_moveCtrl.insertPath(mgr.getPath());
+	}
+}
+
 //draw the whole map
 //para:if isDrawPath equals true, path symbol 'o' will be draw; otherwise draw space symbol ' '
 void maze2::Map::draw(const bool isDrawPath, const bool isDrawPlayer) {
@@ -276,9 +291,12 @@ void maze2::Map::unserialize(const std::string& path) {
 	}
 }
 
-
+//let the players move on the map
 void maze2::Map::playMap() {
+	std::cout << "The maze is fully solvable as all players can reach the finishing point!\n";
 	std::vector<Unit*> players;
+
+	//this looks like a render loop, every frame the position of players will change
 	do
 	{
 		players = m_moveCtrl.getPlayersPosition();

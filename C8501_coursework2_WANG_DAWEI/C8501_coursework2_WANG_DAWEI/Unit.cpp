@@ -57,7 +57,7 @@ char maze2::Unit::getGraphic() {
 	case UnitType::SPACE:
 		return ' ';
 	case UnitType::ORIGIN:
-		return 'S';
+		return 'F';
 	case UnitType::WALL:
 		return 'X';
 	case UnitType::EXIT:

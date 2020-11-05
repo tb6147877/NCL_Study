@@ -63,6 +63,7 @@ namespace maze2 {
 	public:
 		Map(const int row, const int column,const int exitNum);
 		Map() = default;
+		Map(const std::vector<std::vector<maze2::Unit*>>& units, const int row, const int column, const int exitNum,const int centerX,const int centerY, const std::vector<Unit*>& exits);
 		~Map();
 
 		int getExitNumber() { return m_exitNum; }
@@ -76,6 +77,8 @@ namespace maze2 {
 		//para::arr stores exits which have find path
 		bool checkHasPath(std::vector<Unit*>& arr);
 
+		void findPathForEveryExit();
+
 		//draw the whole map
 		//para:if isDrawPath equals true, path symbol 'o' will be draw; otherwise draw space symbol ' '
 		void draw(const bool isDrawPath=true, const bool isDrawPlayer = false);
@@ -88,6 +91,7 @@ namespace maze2 {
 
 		//let the players move on the map
 		void playMap();
+
 
 	};
 

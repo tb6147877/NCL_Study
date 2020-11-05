@@ -7,6 +7,7 @@
 #include "Map.h"
 #include "Tools.h"
 #include "Astar_Manager.h"
+#include "MapBuilder.h"
 
 #define RESET "\033[0m"
 #define BLACK "\033[30m" /* Black */
@@ -211,15 +212,24 @@ int main()
 		std::cout << 222;
 	}*/
 
-	maze2::Map map{ 10,10,1 };
-	/*maze2::PlayerMoveController ctrl{};
-	map.setPlayerMoveController(ctrl);*/
+	//maze2::Map map{ 15,15,2 };
+	///*maze2::PlayerMoveController ctrl{};
+	//map.setPlayerMoveController(ctrl);*/
+	//map.draw();
+	//std::cout << "\n=================================\n";
+	//map.playMap();
+
+
+
+	maze2::Map map{ maze2::MapBuilder::buildMap("C:/Users/10626/Desktop/cpp_test1") };
 	map.draw();
 	std::cout << "\n=================================\n";
+	map.findPathForEveryExit();
 	map.playMap();
 
-	/*map.serialize("C:/Users/10626/Desktop/cpp_test1");
-	std::cout << "\n=================================\n";
+
+	//map.serialize("C:/Users/10626/Desktop/cpp_test1");
+	/*std::cout << "\n=================================\n";
 	map.unserialize("C:/Users/10626/Desktop/cpp_test1");*/
 	//maze1::Tools::writeFile("111\n333\n666","C:/Users/10626/Desktop/cpp_test1");
 
