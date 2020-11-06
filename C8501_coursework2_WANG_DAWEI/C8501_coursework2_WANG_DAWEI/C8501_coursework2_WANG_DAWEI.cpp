@@ -122,6 +122,11 @@ std::string askString() {
 	return str;
 }
 
+bool askReturn2Start() {
+	std::cout << "#############################################################################" << "\n";
+	std::cout << "Do you want to return the start of the program? (1-yes/2-no)" << "\n";
+	return 1 == askOption();
+}
 
 //Save the map
 //para:a reference of map class
@@ -138,11 +143,8 @@ void doMapSave(maze2::Map& map) {
 		std::string path{ maze2::Tools::getDesktopPath() + '/' + name };
 		map.serialize(path);
 		std::cout << "Your map file has been saved in " << path << "\n";
-		std::cout << "Program End! Thank you!" << "\n";
 	}
-	else {
-		std::cout << "Program End! Thank you!" << "\n";
-	}
+	std::cout << "Program End! Thank you!" << "\n";
 }
 
 //generate an object of map class to do generating map and finding path
@@ -161,6 +163,8 @@ void doMapGenerate() {
 
 	maze2::Map map{ row,column,exitNum };
 	map.draw();
+	std::cout << "\n===================================================\n";
+	map.playMap();
 
 	doMapSave(map);
 }
@@ -170,23 +174,29 @@ void doMapLoad() {
 	std::cout << "#############################################################################" << "\n";
 	std::cout << "Welcome to Map Loading, please enter the absolute path of your map" << "\n";
 	std::string path{ askPath() };
-	maze2::Map map{};
-	map.unserialize(path);
-	std::cout << "Program End! Thank you!" << "\n";
+	maze2::Map map{ maze2::MapBuilder::buildMap(path) };
+	map.draw();
+	std::cout << "\n===================================================\n";
+	map.findPathForEveryExit();
+	map.playMap();
 }
 
 
 
 int main()
 {
-	/*std::cout << "Welcome to Maze2, C8501 courework, I am Wang Dawei " << "\n";
-	std::cout << "#############################################################################" << "\n";
-	std::cout << "If you want to generate map and find path, please type 1 and press Enter " << "\n";
-	std::cout << "If you want to load map in the file and show it, please type 2 and press Enter " << "\n";
+	do
+	{
+		std::cout << "#############################################################################" << "\n";
+		std::cout << "Welcome to Maze1, C8501 courework, I am Wang Dawei " << "\n";
+		std::cout << "#############################################################################" << "\n";
+		std::cout << "If you want to generate map and find path, please type 1 and press Enter " << "\n";
+		std::cout << "If you want to load map in the file and show it, please type 2 and press Enter " << "\n";
 
-	int opt{ -1 };
-	opt = askOption();
-	opt == 1 ? doMapGenerate() : doMapLoad();*/
+		int opt{ -1 };
+		opt = askOption();
+		opt == 1 ? doMapGenerate() : doMapLoad();
+	} while (askReturn2Start());
 
 
 
@@ -212,10 +222,10 @@ int main()
 		std::cout << 222;
 	}*/
 
-	maze2::Map map{ 15,15,2 };
+	/*maze2::Map map{ 15,15,2 };
 	map.draw();
 	std::cout << "\n=================================\n";
-	map.playMap();
+	map.playMap();*/
 
 
 

@@ -121,7 +121,7 @@ std::string askString() {
 	return str;
 }
 
-
+//ask user weather want to close the prgram
 bool askReturn2Start() {
 	std::cout << "#############################################################################" << "\n";
 	std::cout << "Do you want to return the start of the program? (1-yes/2-no)" << "\n";
@@ -201,7 +201,7 @@ int main()
 
 
 
-
+	//maze1::Tools::writeFile("000\n333\n666", "C:/Users/10626/Desktop/cpp_test1");
 
 
 
@@ -221,9 +221,9 @@ int main()
 	}*/
 
 	/*maze1::Map map{ 5,5,1 };
-	map.draw();*/
-	/*map.serialize("C:/Users/10626/Desktop/cpp_test1");
-	std::cout << "\n=================================\n";
+	map.draw();
+	map.serialize("C:/Users/10626/Desktop/dogs");*/
+	/*std::cout << "\n=================================\n";
 	map.unserialize("C:/Users/10626/Desktop/cpp_test1");*/
 	//maze1::Tools::writeFile("111\n333\n666","C:/Users/10626/Desktop/cpp_test1");
 }
