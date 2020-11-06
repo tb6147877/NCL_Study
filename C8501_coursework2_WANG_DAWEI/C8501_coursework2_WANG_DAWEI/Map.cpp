@@ -293,6 +293,7 @@ void maze2::Map::unserialize(const std::string& path) {
 
 //let the players move on the map
 void maze2::Map::playMap() {
+	//if I can call this function, the map has a fully solution.
 	std::cout << "The maze is fully solvable as all players can reach the finishing point!\n";
 	std::vector<Unit*> players;
 

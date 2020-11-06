@@ -122,6 +122,13 @@ std::string askString() {
 }
 
 
+bool askReturn2Start() {
+	std::cout << "#############################################################################" << "\n";
+	std::cout << "Do you want to return the start of the program? (1-yes/2-no)" << "\n";
+	return 1 == askOption();
+}
+
+
 //Save the map
 //para:a reference of map class
 void doMapSave(maze1::Map& map) {
@@ -137,11 +144,8 @@ void doMapSave(maze1::Map& map) {
 		std::string path{ maze1::Tools::getDesktopPath() + '/' + name };
 		map.serialize(path);
 		std::cout << "Your map file has been saved in "<<path << "\n";
-		std::cout << "Program End! Thank you!" << "\n";
 	}
-	else {
-		std::cout << "Program End! Thank you!" << "\n";
-	}
+	std::cout << "Program End! Thank you!" << "\n";
 }
 
 //generate an object of map class to do generating map and finding path
@@ -178,14 +182,19 @@ void doMapLoad() {
 
 int main()
 {
-	std::cout<< "Welcome to Maze1, C8501 courework, I am Wang Dawei " << "\n";
-	std::cout << "#############################################################################" << "\n";
-	std::cout << "If you want to generate map and find path, please type 1 and press Enter " << "\n";
-	std::cout << "If you want to load map in the file and show it, please type 2 and press Enter " << "\n";
+	do
+	{
+		std::cout << "#############################################################################" << "\n";
+		std::cout << "Welcome to Maze1, C8501 courework, I am Wang Dawei " << "\n";
+		std::cout << "#############################################################################" << "\n";
+		std::cout << "If you want to generate map and find path, please type 1 and press Enter " << "\n";
+		std::cout << "If you want to load map in the file and show it, please type 2 and press Enter " << "\n";
 
-	int opt{ -1 };
-	opt=askOption();
-	opt == 1 ? doMapGenerate() : doMapLoad();
+		int opt{ -1 };
+		opt = askOption();
+		opt == 1 ? doMapGenerate() : doMapLoad();
+	} while (askReturn2Start());
+	
 
 
 
