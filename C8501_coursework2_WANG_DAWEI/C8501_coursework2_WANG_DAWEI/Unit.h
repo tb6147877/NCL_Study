@@ -4,6 +4,8 @@
 #include <utility>
 #include <string>
 
+#include "Tools.h"
+
 namespace maze2 {
 	//Unit is a point on the map
 	class Unit

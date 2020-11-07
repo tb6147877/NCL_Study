@@ -8,13 +8,6 @@
 #include "Tools.h"
 #include "Astar_Manager.h"
 
-#define RESET "\033[0m"
-#define BLACK "\033[30m" /* Black */
-#define CYAN "\033[36m" /* Cyan */
-#define RED "\033[31m" /* Red */
-#define GREEN "\033[32m" /* Green */
-#define YELLOW "\033[33m" /* Yellow */
-#define BLUE "\033[34m" /* Blue */
 
 //keep asking an option from user, and do the validity check
 //return: 1 or 2
@@ -200,16 +193,8 @@ int main()
 
 
 
-
+	//test code, please ignore
 	//maze1::Tools::writeFile("000\n333\n666", "C:/Users/10626/Desktop/cpp_test1");
-
-
-
-
-
-
-
-
 	/*bool flag=maze1::Tools::hasFile("C:/Users/10626/Desktop/cpp_test1");
 
 	if (flag)

@@ -148,9 +148,12 @@ void maze1::Map::reduceWall() {
 
 void maze1::Map::increaseWall() {
 	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
-				if (unit->getUnitType() == Unit::UnitType::SPACE)
+				if (unit->getMapType() != Unit::MapType::CENTER_REGION and unit->getUnitType() == Unit::UnitType::SPACE)
 				{
-					unit->setUnitType((Unit::UnitType)Tools::getRamdom(Unit::UnitType::SPACE, Unit::UnitType::WALL));
+					//control the number of walls
+					int temp{ Tools::getRamdom(1, 5) };
+					Unit::UnitType type{ temp == 1 ? Unit::UnitType::WALL : Unit::UnitType::SPACE };
+					unit->setUnitType(type);
 				}
 	} };
 	walkMap(func);

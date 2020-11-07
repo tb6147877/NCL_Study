@@ -22,18 +22,18 @@ void maze1::Unit::draw(const bool isDrawPath) {
 		std::cout << " ";
 		break;
 	case UnitType::ORIGIN:
-		std::cout << RED<<"S"<<RESET;
+		maze1::Tools::coloredCout("S", Tools::FColor::F_Red);
 		break;
 	case UnitType::WALL:
-		std::cout <<CYAN<< "X"<<RESET;
+		maze1::Tools::coloredCout("X", Tools::FColor::F_Cyan);
 		break;
 	case UnitType::EXIT:
-		std::cout <<YELLOW<< "E"<<RESET;
+		maze1::Tools::coloredCout("E", Tools::FColor::F_Yellow);
 		break;
 	case UnitType::PATH:
 		if (isDrawPath)
 		{
-			std::cout << GREEN << "o" << RESET;
+			maze1::Tools::coloredCout("o", Tools::FColor::F_Green);
 		}
 		else {
 			std::cout << " ";

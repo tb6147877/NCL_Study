@@ -13,30 +13,40 @@ std::vector<std::string> maze2::Tools::readFile(const std::string& path, int& ro
 	std::vector<std::string> temp{};
 
 	std::ifstream file;
-	file.open(path, std::ios::in);
-	for (; !file.eof();)
+	file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	try
 	{
-		file.getline(buf, 1024);
-		str = "";
-		column = 0;
-		for (int i = 0; i < sizeof(buf)/ sizeof(char); i++)
+		file.open(path, std::ios::in);
+		for (; !file.eof();)
 		{
-			if (buf[i]>0)
+			file.getline(buf, 1024);
+			str = "";
+			column = 0;
+			for (int i = 0; i < sizeof(buf) / sizeof(char); i++)
 			{
-				str += buf[i];
-				++column;
+				if (buf[i] > 0)
+				{
+					str += buf[i];
+					++column;
+				}
+				else
+				{
+					continue;
+				}
 			}
-			else
-			{
-				continue;
-			} 
+			++row;
+			//std::cout << buf << std::endl;
+			temp.push_back(str);
 		}
-		++row;
-		//std::cout << buf << std::endl;
-		temp.push_back(str);
+
+		file.close();
+	}
+	catch (const std::ifstream::failure& e)
+	{
+		std::cout << "read file exception£º\n" << e.what() << "\n";
 	}
 
-	file.close();
+	
 	return temp;
 }
 
@@ -78,4 +88,11 @@ void maze2::Tools::resetCursor(const int yOffset, const std::string& str) {
 	COORD pos = { 0, csbi.dwCursorPosition.Y + yOffset };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 	std::cout << str;
+}
+
+void maze2::Tools::coloredCout(const std::string& str, FColor foreColor, BColor backColor) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, foreColor | backColor);
+	std::cout << str;
+	SetConsoleTextAttribute(handle, FColor::F_White | BColor::B_Black);
 }

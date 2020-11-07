@@ -70,3 +70,10 @@ std::string  maze1::Tools::getDesktopPath()
 
 	return std::string(szDir);
 }
+
+void maze1::Tools::coloredCout(const std::string& str, FColor foreColor, BColor backColor) {
+	HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(handle, foreColor | backColor);
+	std::cout << str;
+	SetConsoleTextAttribute(handle, FColor::F_White | BColor::B_Black);
+}
