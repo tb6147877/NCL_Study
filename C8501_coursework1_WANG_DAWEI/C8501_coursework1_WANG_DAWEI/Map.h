@@ -53,6 +53,9 @@ namespace maze1 {
 		//if the map don't have a path, this function is needed
 		void reduceWall();
 
+		//after i find path, increase some walls is better
+		void increaseWall();
+
 		//in the map, there is 4 points cannot be an exit because they can lead to no path, there are 4 corners
 		bool isBlindUnit(Unit* unit);
 	public:

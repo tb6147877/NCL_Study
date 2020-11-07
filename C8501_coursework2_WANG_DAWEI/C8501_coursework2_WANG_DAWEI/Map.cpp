@@ -142,6 +142,16 @@ void maze2::Map::reduceWall() {
 	walkMap(func);
 }
 
+void maze2::Map::increaseWall() {
+	std::function<void(Unit* unit, Map* map)> func{ [&](Unit* unit, Map* map) {
+				if (unit->getUnitType() == Unit::UnitType::SPACE)
+				{
+					unit->setUnitType((Unit::UnitType)Tools::getRamdom(Unit::UnitType::SPACE, Unit::UnitType::WALL));
+				}
+	} };
+	walkMap(func);
+}
+
 //in the map, there is 4 points cannot be an exit because they can lead to no path, there are 4 corners
 bool maze2::Map::isBlindUnit(Unit* unit) {
 	//These units cannot access
@@ -189,6 +199,7 @@ maze2::Map::Map(const int row, const int column, const int exitNum)
 		++m_generateTimes;
 	} while (not checkHasPath(arr));//check wether there is a path
 	std::cout << "The map generates " << m_generateTimes << " times.\n\n";
+	increaseWall();
 }
 
 maze2::Map::Map(const std::vector<std::vector<maze2::Unit*>>& units, const int row, const int column, const int exitNum, const int centerX, const int centerY, const std::vector<Unit*>& exits) 
