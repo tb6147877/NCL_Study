@@ -103,15 +103,17 @@ void maze1::Map::setExit() {
 		return;
 	}
 
-	//produce exits
+	//2.produce exits
 	std::vector<int> exits{};
 	do
 	{
+		//random a index of edges
 		if (exits.size()==0)
 		{
 			exits.push_back(Tools::getRamdom(0, edges.size() - 1));
 		}
 		else {
+			//if index is duplicate, random again in loopdui
 			int temp{ Tools::getRamdom(0, edges.size() - 1) };
 			while (temp==exits[exits.size()-1])
 			{
@@ -121,6 +123,7 @@ void maze1::Map::setExit() {
 		}
 	} while (exits.size()<m_exitNum);
 
+	//3.store exits
 	for (auto  item: exits)
 	{
 		//set unit type
@@ -203,6 +206,7 @@ maze1::Map::~Map() {
 }
 
 //check wether this map has a path
+//arr strore all targets which have find path
 bool maze1::Map::checkHasPath(std::vector<Unit*>& arr) {
 	bool flag{ true };
 	for (int i = 0; i < getExits().size(); i++)

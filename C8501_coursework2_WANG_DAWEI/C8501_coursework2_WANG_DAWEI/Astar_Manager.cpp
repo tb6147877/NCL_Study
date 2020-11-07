@@ -116,6 +116,22 @@ maze2::Astar_Manager::Astar_Manager(const std::vector<std::vector<maze2::Unit*>>
 
 maze2::Astar_Manager::~Astar_Manager() {}
 
+void maze2::Astar_Manager::setGridFGH(Astar_Grid* grid, Astar_Grid* curGrid, const std::pair<int, int>& target) {
+	int g = curGrid->get_g_value() + 10;
+	if (grid->get_g_value() == 0 or grid->get_g_value() > g)
+	{
+		grid->set_g_value(g);
+		grid->setParent(curGrid);
+	}
+	grid->set_h_value(calculManhattanDis(grid->getCoordinate(), target));
+	grid->set_f_value(grid->get_g_value() + grid->get_h_value());
+
+	if (not isGridInOpenList(grid))
+	{
+		m_openList.push_back(grid);
+	}
+}
+
 //core function of A star path finding
 bool maze2::Astar_Manager::findPath(const std::pair<int, int>& origin, const std::pair<int, int>& target) {
 	bool flag{ true };
@@ -141,20 +157,7 @@ bool maze2::Astar_Manager::findPath(const std::pair<int, int>& origin, const std
 		//calculate f,g,h value of grids
 		for (int i = 0; i < temp.size(); i++)
 		{
-			int g = curGrid->get_g_value() + 10;
-			if (temp[i]->get_g_value()==0 or temp[i]->get_g_value()>g)
-			{
-				temp[i]->set_g_value(g);
-				temp[i]->setParent(curGrid);
-			}
-			temp[i]->set_h_value(calculManhattanDis(temp[i]->getCoordinate(), target));
-			temp[i]->set_f_value(temp[i]->get_g_value() + temp[i]->get_h_value());
-
-			if (not isGridInOpenList(temp[i]))
-			{
-				m_openList.push_back(temp[i]);
-			}
-
+			setGridFGH(temp[i], curGrid, target);
 			updateOpenList();
 		}
 		m_closeList.push_back(curGrid);

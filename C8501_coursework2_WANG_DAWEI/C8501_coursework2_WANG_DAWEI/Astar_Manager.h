@@ -36,6 +36,9 @@ namespace maze2 {
 		//judge is grid in open list
 		bool isGridInOpenList(Astar_Grid* target);
 
+		//set a grid with f-value, g-value, h-value
+		void setGridFGH(Astar_Grid* grid, Astar_Grid* curGrid, const std::pair<int, int>& target);
+
 		//sort open list, bubble sort
 		void updateOpenList();
 
